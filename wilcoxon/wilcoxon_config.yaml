@@ -1,0 +1,24 @@
+# 表头出现的所有方法
+method_list:
+  - Kmedoids.LOC
+  - KmeansPlus.LOC
+  - Cure.LOC
+  - ManualUp
+  - EALR
+  - EATT
+  - CBS+
+# baseline 方法列表
+base_line_list:
+  - Kmedoids.LOC
+  - KmeansPlus.LOC
+  - Cure.LOC
+
+# metric指标列表
+metrics:
+  - IFA
+  - PofB
+  - PMI
+  - Recallx
+
+# xlsx数据存放位置 xlsx文件命名规则为 为 metric.xlsx
+data_path: ./test_data
