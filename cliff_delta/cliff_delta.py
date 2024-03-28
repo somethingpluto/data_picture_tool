@@ -65,8 +65,8 @@ class CliffDeltaUtil:
     def calculate_cliff_delta(self, metric_datas, method_list, metric, base):
         cliffs = []
         for i in range(1, len(metric_datas)):
-            print(f"compute cliffs delta between {base} and {method_list[i - 1]}")
-            cliffs_d, res = cliffs_delta(metric_datas[0], metric_datas[i])
+            print(f"compute cliffs delta between {base} and {method_list[i-1]}")
+            cliffs_d, res = cliffs_delta(metric_datas[0], metric_datas[i-1])
             print(cliffs_d, res)
             cliffs.append(cliffs_d)
         method_list.pop()

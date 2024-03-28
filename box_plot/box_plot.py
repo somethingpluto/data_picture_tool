@@ -22,28 +22,7 @@ class BoxPlotUtil:
         self.csv_data_dir_path = csv_data_dir_path
         self.all_file_path = []
         self.header = [
-            "Kmeans.LOC",
-            "Kmedoids.LOC",
-            "Xmeans.CAM",
-            "Fcm.LCOM3",
-            "Gmeans.DAM",
-            "MiniBatchKmeans.LOC",
-            "KmeansPlus.LOC",
-            "Birch.Ce",
-            "Cure.LOC",
-            "Rock.AMC",
-            "Agglomerative.LOC",
-            "Dbscan.LOC",
-            "Optics.LOC",
-            "MeanShift.Avg_CC",
-            "Somsc.LOC",
-            "Syncsom.CBO",
-            "EMA.NPM",
-            "AP.LOC",
-            "Bsas.LCOM3",
-            "Mbsas.LCOM3",
-            "Ttsas.NPM",
-            "Bang.LOC",
+            'random',  'uncertainty-margin', 'uncertainty-least_confident', 'uncertainty-entropy','qbc','bmdr','err-reduction','graph_density','quire','spal','batch-rank'
         ]
         self.color_dict = {
             1: "red",
@@ -120,14 +99,15 @@ class BoxPlotUtil:
                 # 将txt文件转换为csv格式
                 color_data = self.parse_txt2csv(file)
                 # 读取csv文件
-                csv_file_name = file.split("\\")[1].strip(".txt")
-                print("111111111111111111")
+                print(file)
+                csv_file_name = file.split('output\\')[1].strip(".txt")
+                print(csv_file_name)
                 csv_file_path = os.path.join(self.csv_data_dir_path, csv_file_name)
                 all_data = pd.read_csv(csv_file_path + ".csv")
                 all_data = all_data.iloc[1:, 1:].values
                 color_nums = color_data[1]
                 # 创建画布和子图
-                fig, ax = plt.subplots(figsize=(12, 2))
+                fig, ax = plt.subplots(figsize=(13, 5))
                 ax.tick_params(direction="in")
                 figure = ax.boxplot(
                     all_data,
@@ -138,69 +118,71 @@ class BoxPlotUtil:
                     showmeans=True,
                     patch_artist=False,
                     showfliers=False,
+                    widths=0.3
                 )
-                colors = [self.color_dict[int(i)] for i in color_nums]
-                for i in range(0, len(colors)):
-                    k = figure["boxes"][i]
-                    k.set(color=colors[i])
-                    k = figure["means"][i]
-                    k.set(color=colors[i])
-                    k = figure["medians"][i]
-                    k.set(color=colors[i], linewidth=2)
-                    k = figure["whiskers"][2 * i : 2 * i + 2]
-                    for w in k:
-                        w.set(color=colors[i], linestyle="--")
-                    k = figure["caps"][2 * i : 2 * i + 2]
-                    for w in k:
-                        w.set(color=colors[i])
-                plt.xlim((0, 23))
-                if (
-                    csv_file_name.strip(".csv") == "IFA"
-                    or csv_file_name.strip(".csv") == "Popt"
-                ):
-                    plt.ylabel("{0}".format(csv_file_name.strip(".csv")), fontsize=10)
-                    if csv_file_name.strip(".csv") == "IFA":
-                        plt.axhline(y=10, color="blue", lw=1)
-                else:
-                    plt.ylabel(
-                        "{0}@20%".format(csv_file_name.strip(".csv")), fontsize=10
-                    )
+                # colors = [self.color_dict[int(i)] for i in color_nums]
+                # for i in range(0, len(colors)):
+                    # k = figure["boxes"][i]
+                    # k.set(color=colors[i])
+                    # k = figure["means"][i]
+                    # k.set(color=colors[i])
+                    # k = figure["medians"][i]
+                    # k.set(color=colors[i], linewidth=2)
+                    # k = figure["whiskers"][2 * i : 2 * i + 2]
+                    # for w in k:
+                    #     w.set(color=colors[i], linestyle="--")
+                    # k = figure["caps"][2 * i : 2 * i + 2]
+                    # for w in k:
+                    #     w.set(color=colors[i])
+                medians = [item.get_ydata()[0] for item in figure['medians']]
+                for median, line in zip(medians, figure['medians']):
+                    x, y = line.get_xdata()[0], median  # x坐标取中位数线的x，y坐标为中位数的值
+                    ax.text(x, y, f'{y:.2f}', ha='center', va='bottom', color='orange',fontsize=12)
+
+                for cap in figure['caps']:
+                    x, y = cap.get_xdata()[0], cap.get_ydata()[0]
+                    ax.text(x, y, f'{y:.2f}', ha='center', va='bottom' if cap == figure['caps'][0] else 'top', color='red', fontsize=12)
+                for box in figure['boxes']:
+                    x = box.get_xdata()[0]  # 获取盒子的x坐标
+                    y_bottom = box.get_ydata()[0]  # Q1
+                    y_top = box.get_ydata()[2]  # Q3
+                    ax.text(x, y_bottom, f'{y_bottom:.2f}', ha='center', va='top', color='green', fontsize=12)
+                    ax.text(x, y_top, f'{y_top:.2f}', ha='center', va='bottom', color='green', fontsize=12)
+                plt.xlim((0, 12))
                 lenheader = len(self.header) + 1
                 plt.xticks(
                     [y for y in range(1, lenheader)],
                     self.header,
                     rotation=45,
                     weight="heavy",
-                    fontsize=7.5,
+                    fontsize=12,
                 )
-                plt.yticks(fontsize=10)
+                plt.ylabel(
+                        "{0}".format(csv_file_name), fontsize=24
+                    )
+                plt.yticks(fontsize=16)
                 plt.rcParams["xtick.direction"] = "in"
                 plt.rcParams["ytick.direction"] = "in"
+                plt.axvline(1.5, color="black", linestyle=":")
+                plt.axvline(4.5, color="black", linestyle=":")
+                plt.axvline(5.5, color="black", linestyle=":")
                 plt.axvline(7.5, color="black", linestyle=":")
-                plt.axvline(11.5, color="black", linestyle=":")
-                plt.axvline(14.5, color="black", linestyle=":")
-                plt.axvline(17.5, color="black", linestyle=":")
-                plt.axvline(18.5, color="black", linestyle=":")
-                plt.axvline(21.5, color="black", linestyle=":")
                 plt.title(
-                    "                                       PBC                             "
-                    "                    HBC             "
-                    "               DBC            "
-                    "            MBC          "
-                    "  GTBC        "
-                    "     SBC     "
-                    "          GBC ",
+                    "                                                            US                             "
+                    "            QBC             "
+                    "            EER            "
+                    "                             DWM          ",
                     fontsize=11,
                     loc="left",
                 )
                 if not os.path.exists("./pictures/"):
                     os.makedirs("./pictures/")
                 output_file_path = "./pictures/RQ1_{0}.png".format(
-                    csv_file_name.strip(".csv")
+                    csv_file_name
                 )
                 foo_fig = plt.gcf()
                 foo_fig.savefig(
-                    output_file_path, format="png", dpi=1000, bbox_inches="tight"
+                    output_file_path, format="png", dpi=600, bbox_inches="tight"
                 )
                 plt.clf()
                 plt.close()

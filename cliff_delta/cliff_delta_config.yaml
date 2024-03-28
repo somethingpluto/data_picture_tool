@@ -1,24 +1,29 @@
 # 表头出现的所有方法
 method_list:
-  - Kmedoids.LOC
-  - KmeansPlus.LOC
-  - Cure.LOC
-  - ManualUp
-  - EALR
-  - EATT
-  - CBS+
+  - random
+  - uncertainty-margin
+  - uncertainty-least_confident
+  - uncertainty-entropy
+  - qbc
+  - bmdr
+  - err-reduction
+  - graph_density
+  - quire
+  - spal
+  - batch-rank
 # baseline 方法列表
 base_line_list:
-  - Kmedoids.LOC
-  - KmeansPlus.LOC
-  - Cure.LOC
+  - random
 
 # metric指标列表
 metrics:
-  - IFA
-  - PofB
-  - PMI
-  - Recallx
+  - accuracy
+  - auc
+  - balance
+  - f1
+  - mcc
+  - precision
+  - recall
 
 # xlsx数据存放位置 xlsx文件命名规则为 为 metric.xlsx
 data_path: ./test_data

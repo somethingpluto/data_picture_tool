@@ -96,7 +96,7 @@ class WilcoxonUtil:
         # 剔除base 方法
         method_list.pop()
         output = pd.DataFrame(data=[p_values], columns=method_list)
-        output.to_csv(output_path, encoding='utf-8')
+        output.to_csv(output_path, encoding='utf-8',index=False)
 
     def average_improvement(self, col1, col2):
         avgCol1 = round(np.average(col1), 3)
