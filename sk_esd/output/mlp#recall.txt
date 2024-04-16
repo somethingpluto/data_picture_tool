@@ -1,0 +1,12 @@
+"x"
+"QUIRE" 1
+"SPAL" 2
+"MARGIN" 3
+"EER" 4
+"LC" 4
+"ET" 4
+"RANDOM" 5
+"RBMS" 5
+"QBC.VT" 5
+"GD" 5
+"BMDR" 5

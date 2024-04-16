@@ -1,0 +1,12 @@
+"x"
+"QBC.VT" 1
+"MARGIN" 2
+"BMDR" 3
+"RANDOM" 4
+"RBMS" 5
+"SPAL" 6
+"GD" 7
+"QUIRE" 8
+"EER" 8
+"ET" 9
+"LC" 9

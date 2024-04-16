@@ -17,9 +17,6 @@ base_line_list:
 
 # metric指标列表
 metrics:
-  - accuracy
-  - auc
-  - balance
   - f1
   - mcc
   - precision
