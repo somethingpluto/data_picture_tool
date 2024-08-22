@@ -1,0 +1,9 @@
+"x"
+"LR" 1
+"ADA" 1
+"MLP" 2
+"SVC" 3
+"RF" 3
+"KNN" 4
+"DT" 5
+"NB" 6

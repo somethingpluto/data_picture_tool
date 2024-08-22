@@ -2,7 +2,7 @@ library(ScottKnottESD)
 library(readxl)
 
 data_path <- "E:\\code\\code_back\\python_project\\data_picture_tool\\sk_esd_ranking\\test_data\\"
-sk_esd_ranking_result_path <- 'E:\\code\\code_back\\python_project\\data_picture_tool\\sk_esd_ranking\\picture\\'
+sk_esd_ranking_result_path <- 'E:\\code\\code_back\\python_project\\data_picture_tool\\sk_esd_ranking\\output'
 file_names <- list.files(data_path)
 for(file in file_names){
   if(grepl(pattern = ".xlsx$",x=file)){
@@ -20,13 +20,13 @@ for(file in file_names){
     picutre_file_name <- paste0('RQ2_Ranking_',dataset,"-",metric,".jpg")
     picutre_file_path <- paste0(sk_esd_ranking_result_path,picutre_file_name)
     print(picutre_file_path)
-    jpeg(file=picutre_file_path,width =5000,height =2000,units = 'px',res = 600)
+    jpeg(file=picutre_file_path,width =2500,height =1600,units = 'px',res = 600)
     plot(sk,
-         mar=c(0,0,0,0),
+         mar=c(0,0,0,0)+0.1,
          las=2,
-         cex=0.6,
+         cex=0.7,
          cex.axis=0.1,
-         cex.lab=1.2,
+         cex.lab=0.9,
          xlab = '',
          ylab = 'Rankings',
          mgp = c(3,2,0),
